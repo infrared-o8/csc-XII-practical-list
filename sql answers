@@ -13,4 +13,9 @@ k. alter table info add area varchar(15);
 l. alter table info drop area;
 m. drop table info;
 
-2. 
+2. a. create table stock(pno int(5) primary key, pname varchar(30), dcode int(5), qty int(5), unitprice int(5), stockdate date)
+create table dealers(dcode int(5) primary key, dname varchar(100))
+b. select unitprice from stock where dcode = 102;
+c. select * from stock order by stockdate desc;
+d. select max(unitprice) AS "MAX PRICE", dcode from stock group by dcode;
+e. select pname from stock; select dname from dealers;
