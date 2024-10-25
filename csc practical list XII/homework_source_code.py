@@ -369,3 +369,59 @@ while True:
 #2. Write a program to connect with database to search/update/delete employee records in the table
 #employee depending upon user’s choice and display the records. If the employee number is not
 #found, the program must display an appropriate message.
+
+database = mysql.connector.connect(host='localhost', user='root', password='admin', database='hospital_main')
+cursor = database.cursor()
+
+def check_if_id_table(id) -> bool:
+    cursor.execute(f'select * from doctors where doctorid = "{id}"')
+    data = cursor.fetchone()
+    if data is None or len(data) == 0: #confirm which one works.
+        print(f'Record with {id} not found.')
+        return False
+    else:
+        return True
+
+def display_all_records():
+    cursor.execute('select * from doctors;')
+    return cursor.fetchall()
+
+def search_record(id):
+    if check_if_id_table(id) == True:
+        cursor.execute(f'select * from doctors where doctorID = "{id}"')
+        data = cursor.fetchone()
+        return data
+
+
+def update_record(id, newdataquery):
+    if check_if_id_table(id) == True:
+        cursor.execute(f'update doctors set {newdataquery} where doctorid = "{id}"')
+
+def delete_record(id):
+    if check_if_id_table(id) == True:
+        cursor.execute(f'delete from doctors where doctorid = "{id}"')
+
+while True:
+    option = int(input('Enter action:\n1. Read existing employee data\n2. Search for employee\n3. Update employee record\n4. Delete employee record\n5. Exit\n'))
+    if option == 1:
+        data = display_all_records();
+        for index in range(len(data)):
+            print(f'{index + 1}. {data[index]}')
+    elif option == 2:
+        id = input('Enter ID: ')
+        print(search_record(id))
+    elif option == 3:
+        #Update employee record 
+        id = input('Enter ID: ')
+        #gather info
+        name = input('Enter new name: ')
+        spec = input('Enter new specialization: ')
+        phone = int(input('Enter phone: '))
+        query = f"name='{name}',specialization='{spec}',phone={phone}"
+        update_record(id, query)
+    elif option == 4:
+        #delete employee
+        id = input('Enter ID: ')
+        delete_record(id)
+    else:
+        break
