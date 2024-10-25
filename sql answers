@@ -1,0 +1,16 @@
+SQL Answers:
+1. a. create database Students;
+b. use Students;
+c. create table info (rollno INT(2) PRIMARY KEY, name varchar(30), gender char(1), age int(3), dept varchar(30), doa date, fees int(5)) 
+d. insert into info VALUES (1, 'Arun', 'M', 24, 'computer', '1997-01-10', 120), (2, 'Ankit', 'M', 21, 'history', '1998-03-24', 200);
+e. select name from info where doa > '1996-04-01';
+f. select distinct dept from info;
+g. select name from info where name LIKE 'A____';
+h. select name from info where name like '_n%';
+i. delete from info where rollno = 8;
+j. update info set fees = 170 where rollno = 1 and fees < 130;
+k. alter table info add area varchar(15);
+l. alter table info drop area;
+m. drop table info;
+
+2. 
