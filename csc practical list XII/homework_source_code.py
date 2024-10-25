@@ -3,7 +3,7 @@ import random as r
 import pickle as p
 import zampy as zp
 import csv
-
+import mysql.connector
 #Default functions:
 def read_b(file_name):
     data = p.load(open(file_name, "rb"))
@@ -39,7 +39,7 @@ def evensum(numbers):
 def read_file_return_hashes(file_name):
     return open(file_name).read().replace(" ", "#")
 
-print(read_file_return_hashes("sample.txt"))
+#print(read_file_return_hashes("sample.txt"))
 #⦁	Write a program to read a text file and display the number of vowels, consonants, uppercase and lowercase in the file.
 def vcul(file_name):
     vowels = ['a', 'e', 'i', 'o', 'u']
@@ -339,3 +339,33 @@ for index in range(len(L1)):
 
 while stack:
     print(POP(stack)) 
+
+#1. Write a program to connect with database to read and store record of employees and display all
+#   records
+
+database = mysql.connector.connect(host='localhost', user='root', password='admin', database='hospital_main')
+cursor = database.cursor()
+
+def display_all_records():
+    cursor.execute('select * from doctors;')
+    return cursor.fetchall()
+
+def add_new_record():
+    doctorID = input('Enter emplyee ID: ')
+    name = input('Enter name of employee: ')
+    cursor.execute(f'insert into doctors (doctorID, name) values ("{doctorID}", "{name}")')
+
+while True:
+    option = int(input('Enter action:\n1. Read existing employees data\n2. Enter new employee record\n3. Exit\n'))
+    if option == 1:
+        data = display_all_records();
+        for index in range(len(data)):
+            print(f'{index + 1}. {data[index]}')
+    elif option == 2:
+        add_new_record()
+    else:
+        break
+
+#2. Write a program to connect with database to search/update/delete employee records in the table
+#employee depending upon user’s choice and display the records. If the employee number is not
+#found, the program must display an appropriate message.
