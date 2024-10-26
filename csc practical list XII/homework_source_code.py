@@ -328,10 +328,11 @@ def PUSH(s, ele):
     s.append(ele)
 
 def POP(s):
-    try:
+    if len(s) > 0:
         return s.pop()
-    except:
-        print("Some error occured while trying to pop.")
+    else:
+        print('Underflow error.')
+        return None
 
 for index in range(len(L1)):
     if index % 2 == 0:
